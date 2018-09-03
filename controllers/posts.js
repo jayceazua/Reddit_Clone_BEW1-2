@@ -21,6 +21,16 @@ router.post('/new', (req, res, next) => {
   });
 });
 
+// SHOW
+router.get('/:id', (req, res, next) => {
+  // LOOK UP THE POST
+  Post.findById(req.params.id).then((post) => {
+    res.render('posts/show', { post });
+  }).catch((err) => {
+    console.log(err.message);
+  });
+});
+
 
 
 module.exports = router
