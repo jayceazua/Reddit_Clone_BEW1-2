@@ -21,7 +21,7 @@ router.post('/new', (req, res, next) => {
   });
 });
 
-// SHOW
+// READ a.k.a. SHOW
 router.get('/:id', (req, res, next) => {
   // LOOK UP THE POST
   Post.findById(req.params.id).then((post) => {
@@ -31,6 +31,8 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+// UPDATE
 
+// DELETE
 
 module.exports = router
