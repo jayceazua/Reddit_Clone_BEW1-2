@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const hbs = require('express-handlebars');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // CRUD Resource >> Posts
 
 app.get('/', (req, res) => {
-  res.send('Hello, World!');
+  res.render('index');
 });
 
 
