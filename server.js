@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 // Database Connection
 require('./database-connection/mongoDB-connection');
-
+const Post = require('./models/post');
 // Template Engine setup
 app.engine('hbs', hbs({
   extname: 'hbs',
@@ -23,13 +23,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// CRUD Resource >> Posts
+// CRUD Resource >> INDEX
 app.get('/', (req, res) => {
-  res.render('index');
+  Post.find().then((posts) => {
+    res.render('index.hbs', { posts })
+  }).catch((err) => {
+    console.log(err.message);
+  });
 });
 
 const posts = require('./controllers/posts');
-
 // Routes - Middleware
 app.use('/posts', posts);
 
