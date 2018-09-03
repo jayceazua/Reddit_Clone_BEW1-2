@@ -25,6 +25,10 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+const posts = require('./controllers/routes/posts');
+
+// Routes - Middleware
+app.use('/posts', posts);
 
 
 app.listen(port, () => {
