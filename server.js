@@ -20,12 +20,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // CRUD Resource >> Posts
-
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-const posts = require('./controllers/routes/posts');
+const posts = require('./controllers/posts');
 
 // Routes - Middleware
 app.use('/posts', posts);
