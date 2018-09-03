@@ -5,6 +5,9 @@ const hbs = require('express-handlebars');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Database Connection
+require('./database-connection/mongoDB-connection');
+
 // Template Engine setup
 app.engine('hbs', hbs({
   extname: 'hbs',

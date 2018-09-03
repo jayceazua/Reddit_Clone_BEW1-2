@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Post = require('../models/post');
 
 // NEW
 router.get('/new', (req, res, next) => {
@@ -8,8 +9,16 @@ router.get('/new', (req, res, next) => {
 
 // CREATE
 router.post('/new', (req, res, next) => {
-  console.log(req.body);
-  res.redirect('/');
+  // INSTANTIATE INSTANCE OF POST MODEL
+  let post = new Post(req.body);
+  // SAVE INSTANCE OF POST MODEL TO DB
+  post.save().then((post) => {
+    return res.redirect('/');
+    console.log('Success!');
+  }).catch((err) => {
+    return res.redirect('/');
+    console.log(err.message);
+  });
 });
 
 
