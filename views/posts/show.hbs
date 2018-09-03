@@ -3,5 +3,8 @@
     <a href="{{post.url}}" class="lead">{{post.title}}</a>
     <p>{{post.summary}}</p>
   </div>
-  <div><a href="/posts/{{post._id}}/edit" class="btn btn-primary">Edit</a></div>
+  <div><a href="/posts/{{post._id}}" class="btn btn-primary">Edit</a></div>
+  <form method="POST" action="/posts/{{post._id}}?_method=DELETE">
+  <button type="submit" class="btn btn-danger">Delete</button>
+</form>
 </div>

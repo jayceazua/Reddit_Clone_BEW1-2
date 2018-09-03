@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('express-handlebars');
+const methodOverride = require('method-override');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -22,6 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
+
 
 // CRUD Resource >> INDEX
 app.get('/', (req, res) => {
