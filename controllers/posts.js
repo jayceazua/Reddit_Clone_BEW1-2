@@ -9,8 +9,7 @@ router.get('/new', (req, res, next) => {
 });
 
 // READ a.k.a. SHOW
-router.get('/:id', (req, res, next) => {
-  console.log(req.method);
+router.get('/:id', (req, res, next) => {  
   // LOOK UP THE POST
   Post.findById(req.params.id).then((post) => {
     return res.render('posts/show', { post });
@@ -49,7 +48,7 @@ TODO:
 When "updating" a certain field the rest of the fields that were not updated
   the current post with blanks.
 **/
-router.patch('/:id', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   Post.findByIdAndUpdate(req.params.id, req.body, { new: true } ).then((post) => {
     console.log(post);
     return res.redirect('/')
@@ -61,7 +60,7 @@ router.patch('/:id', (req, res, next) => {
 
 // DELETE
 router.delete('/:id', (req, res, next) => {
-  Post.findByIdAndDelete(req.params.id).then(() => {
+  Post.findByIdAndRemove(req.params.id).then(() => {
     return res.redirect('/');
   }).catch((err) => {
     console.log(err.message);

@@ -24,3 +24,12 @@
     <textarea name="summary" class="form-control" id="post-summary" placeholder="Enter summary here..."></textarea>
   {{/if}}
 </div>
+
+<div class="form-group">
+  <label for="post-category">Categories</label>
+  {{#if post}}
+    <input name="category" type="text" class="form-control" id="post-category" placeholder="{{post.category}}">
+  {{else}}
+    <input name="category" type="text" class="form-control" id="post-category" placeholder="categories">
+  {{/if}}
+</div>
