@@ -49,9 +49,10 @@ TODO:
 When "updating" a certain field the rest of the fields that were not updated
   the current post with blanks.
 **/
-router.put('/:id', (req, res, next) => {
-  Post.findByIdAndUpdate(req.params.id, req.body).then(() => {
-    return res.redirect('/');
+router.patch('/:id', (req, res, next) => {
+  Post.findByIdAndUpdate(req.params.id, req.body, { new: true } ).then((post) => {
+    console.log(post);
+    return res.redirect('/')
   }).catch((err) => {
     console.log(err.message);
     return res.redirect('/');
