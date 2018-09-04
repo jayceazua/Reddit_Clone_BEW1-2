@@ -43,32 +43,10 @@ router.get('/:id/edit', (req, res, next) => {
 });
 
 // UPDATE
-/**
-TODO:
-When "updating" a certain field the rest of the fields that were not updated
-  the current post with blanks.
-**/
 router.put('/:id', (req, res, next) => {
-  Post.findById(req.params.id).then((post) => {
-    console.log(post.title)
-    console.log(post.url)
-    console.log(post.summary)
-    console.log(post.__v)
-
-    console.log('---- New post ----')
-    let title = req.body.title === '' ? post.title : req.body.title;
-    let url = req.body.url === '' ? post.url : req.body.url;
-    let summary = req.body.summary === '' ? post.summary : req.body.summary;
-    let __v = post.__v + 1;
-    
-    // Post.updateOne(req.body).then((post) => {
-    //   return res.redirect('/')
-    // }).catch((err) => {console.log(err.message)});
-return res.redirect('/');
-  }).catch((err) => {
-    console.log(err.message);
-    return res.redirect('/');
-  });
+  /**
+  TODO: need to properly set the UPDATE endpoint.
+  **/
 });
 
 // DELETE
