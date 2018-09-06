@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha || true"
   },
   "author": "Jayce Azua || jayce.azua@students.makeschool.com",
   "license": "ISC",
@@ -15,5 +15,10 @@
     "express-handlebars": "^3.0.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.2.12"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0"
   }
 }
