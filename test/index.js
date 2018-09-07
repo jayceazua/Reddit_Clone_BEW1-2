@@ -6,6 +6,7 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 describe('Reddit Clone', () => {                  // Describe what you are testing
+
   it('Should have home page', (done) => { // Describe what should happen
     // In this case we test that the home page loads
     chai.request('http://localhost:3000')
@@ -18,4 +19,6 @@ describe('Reddit Clone', () => {                  // Describe what you are testi
         done()                           // Call done if the test completed successfully.
       });
   });
+
+
 });
