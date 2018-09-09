@@ -50,6 +50,4 @@ app.use('/posts', posts);
 app.use('/c', categories);
 
 
-module.exports = app.listen(port, () => {
- console.log(`Reddit Clone is listening on port: ${port}`);
-});
+module.exports = app.listen(port);

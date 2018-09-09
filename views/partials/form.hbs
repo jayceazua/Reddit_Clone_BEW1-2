@@ -1,7 +1,7 @@
 <div class="form-group">
   <label for="post-title">Title</label>
   {{#if post}}
-    <input type="text" name="title" class="form-control" id="post-title" placeholder="{{post.title}}.">
+    <input type="text" name="title" class="form-control" id="post-title" value="{{post.title}}" required>
   {{else}}
     <input type="text" name="title" class="form-control" id="post-title" placeholder="Enter title here...">
   {{/if}}
@@ -10,7 +10,7 @@
 <div class="form-group">
   <label for="post-url">Url</label>
   {{#if post}}
-    <input type="url" name="url" class="form-control" id="post-url" placeholder="{{post.url}}">
+    <input type="url" name="url" class="form-control" id="post-url" value="{{post.url}}" required>
   {{else}}
     <input type="url" name="url" class="form-control" id="post-url" placeholder="https://www.github.com/jayceazua">
   {{/if}}
@@ -19,7 +19,7 @@
 <div class="form-group">
   <label for="post-summary">Summary</label>
   {{#if post}}
-    <textarea name="summary" class="form-control" id="post-summary" placeholder="{{post.summary}}"></textarea>
+    <textarea name="summary" class="form-control" id="post-summary" required>{{post.summary}}</textarea>
   {{else}}
     <textarea name="summary" class="form-control" id="post-summary" placeholder="Enter summary here..."></textarea>
   {{/if}}
@@ -28,7 +28,7 @@
 <div class="form-group">
   <label for="post-category">Categories</label>
   {{#if post}}
-    <input name="category" type="text" class="form-control" id="post-category" placeholder="{{post.category}}">
+    <input name="category" type="text" class="form-control" id="post-category" value="{{post.category}}" required>
   {{else}}
     <input name="category" type="text" class="form-control" id="post-category" placeholder="categories">
   {{/if}}

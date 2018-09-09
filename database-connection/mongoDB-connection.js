@@ -10,6 +10,8 @@ let dbURI = process.env.MONGODB_URI || `mongodb://${dbuser}:${dbpassword}@ds1419
 // 'mongodb://localhost:27017/reddit_clone_bew1-1';
 
 mongoose.connect(dbURI, { useNewUrlParser: true });
-mongoose.connection.once('open', () => {console.log('Reddit Clone BEW 1-2 MongoDB Connected.')});
+mongoose.connection.once('open', () => {
+  console.log('Reddit Clone BEW 1-2 MongoDB Connected.')
+});
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection Error:'));
-mongoose.set('debug', true);
+// mongoose.set('debug', true);

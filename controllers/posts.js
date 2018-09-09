@@ -44,9 +44,11 @@ router.get('/:id/edit', (req, res, next) => {
 
 // UPDATE
 router.put('/:id', (req, res, next) => {
-  /**
-  TODO: need to properly set the UPDATE endpoint.
-  **/
+  Post.findByIdAndUpdate(req.params.id, req.body).then(() => {
+    res.redirect('/');
+  }).catch((err) => {
+    res.send(err.message);
+  })
 });
 
 // DELETE
