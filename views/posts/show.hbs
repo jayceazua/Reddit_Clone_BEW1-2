@@ -1,17 +1,25 @@
 <div class="row">
 
-  <div class="col-sm-6 col-sm-offset-3">
-    <a href="{{post.url}}" class="lead">{{post.title}}</a>
-    <p>{{post.summary}}</p>
-  </div>
-
-  <form method="POST" action="/posts/{{post._id}}?_method=DELETE">
-    <div>
-      {{! Go to the edit page }}
-      <a href="/posts/{{post._id}}/edit" class="btn btn-primary">Edit</a>
-      {{! Delete resource }}
-      <button type="submit" class="btn btn-danger">Delete</button>
+    <div class="col-sm-6 col-sm-offset-3">
+        <a href="{{post.url}}" class="lead">{{post.title}}</a>
+        <p>{{post.summary}}</p>
     </div>
-  </form>
+
+    <form method="POST" action="/posts/{{post._id}}?_method=DELETE">
+        <div>
+            {{! Go to the edit page }}
+            <a href="/posts/{{post._id}}/edit" class="btn btn-primary">Edit</a>
+            {{! Delete resource }}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+
+    <!-- Comments form -->
+    <form method="POST" action="/posts/{{post._id}}/comments">
+        <textarea class='form-control' name="content" placeholder="Comment"></textarea>
+        <div class="text-right">
+            <button type="submit">Save</button>
+        </div>
+    </form>
 
 </div>

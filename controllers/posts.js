@@ -61,4 +61,12 @@ router.delete('/:id', (req, res, next) => {
   });
 });
 
+
+// Comments
+
+// CREATE
+router.post('/:id/comments', (req, res) => {
+    res.json('comment posted.')
+});
+
 module.exports = router
