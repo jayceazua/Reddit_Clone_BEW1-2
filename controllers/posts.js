@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
+const comments = require('./comments');
 
 // NEW
 router.get('/new', (req, res, next) => {
@@ -10,13 +11,12 @@ router.get('/new', (req, res, next) => {
 
 // READ a.k.a. SHOW
 router.get('/:id', (req, res, next) => {
-  // LOOK UP THE POST
-  Post.findById(req.params.id).then((post) => {
-    return res.render('posts/show', { post });
-  }).catch((err) => {
-    console.log(err.message);
-    return res.redirect('/');
-  });
+    // LOOK UP THE POST
+    Post.findById(req.params.id).populate('comments').then((post) => {
+      res.render('posts/show.hbs', { post })
+    }).catch((err) => {
+      console.log(err.message)
+    })
 });
 
 // CREATE
@@ -64,9 +64,9 @@ router.delete('/:id', (req, res, next) => {
 
 // Comments
 
-// CREATE
-router.post('/:id/comments', (req, res) => {
-    res.json('comment posted.')
-});
+router.use('/:id/comments', (req, res, next) => {
+  req.postsId = req.params.id;
+  next();
+}, comments);
 
 module.exports = router

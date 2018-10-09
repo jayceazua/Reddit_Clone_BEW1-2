@@ -18,8 +18,12 @@
     <form method="POST" action="/posts/{{post._id}}/comments">
         <textarea class='form-control' name="content" placeholder="Comment"></textarea>
         <div class="text-right">
-            <button type="submit">Save</button>
+            <button type="submit">Submit</button>
         </div>
     </form>
+
+    {{#each post.comments}}
+        <p>{{this.content}}</p>
+    {{/each}}
 
 </div>
