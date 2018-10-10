@@ -45,9 +45,11 @@ app.get('/', (req, res) => {
 
 const posts = require('./controllers/posts');
 const categories = require('./controllers/categories');
+const users = require('./controllers/auth');
 // Routes - Middleware
 app.use('/posts', posts);
 app.use('/c', categories);
+app.use('', users);
 
 
 module.exports = app.listen(port);

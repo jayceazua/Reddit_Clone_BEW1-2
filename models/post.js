@@ -11,7 +11,7 @@ const PostSchema = new Schema({
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 });
 
-PostSchema.pre('save', (next) => {
+PostSchema.pre('save', function(next) {
   // SET createdAt AND updatedAt
   const now = new Date()
   this.updatedAt = now
