@@ -2,6 +2,8 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const hbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const app = express();
@@ -33,6 +35,8 @@ app.use(methodOverride((req, res) => {
     return method;
   }
 }));
+app.use(cookieParser()); // Add this after you initialize express.
+
 
 // CRUD Resource >> INDEX
 app.get('/', (req, res) => {
