@@ -1,30 +1,23 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 
+
 const UserSchema = new Schema({
-    createdAt: {
-        type: Date
-    },
-    updatedAt: {
-        type: Date
-    },
-    password: {
-        type: String,
-        select: false
-    },
-    username: {
-        type: String,
-        required: true
-    }
+  createdAt    :  {  type: Date  },
+  updatedAt    :  {  type: Date  },
+  password     :  {  type: String, select: false},
+  username     :  {  type: String, required: true}
 });
 
-// Must use function here! ES6 => functions do not bind this!
+
+// Defines the callback with a regular function to avoid problems with this schema
 UserSchema.pre('save', function(next) {
   // SET createdAt AND updatedAt
   const now = new Date();
   this.updatedAt = now;
-  if ( !this.createdAt ) {
+
+  if (!this.createdAt ) {
     this.createdAt = now;
   }
 
@@ -38,12 +31,11 @@ UserSchema.pre('save', function(next) {
       user.password = hash;
       next();
     });
-  });
+  })
 });
 
-
-UserSchema.methods.comparePassword = (password, done) => {
-  bcrypt.compare(password, this.password, (err, isMatch) => {
+UserSchema.methods.comparePassword = function(password, done) {
+  bcrypt.compare(password, this.password, function(err, isMatch) {
     done(err, isMatch);
   });
 };

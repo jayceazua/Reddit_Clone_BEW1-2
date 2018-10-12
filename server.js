@@ -1,59 +1,45 @@
 require('dotenv').config();
-const path = require('path');
 const express = require('express');
+const app = express();
+const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const hbs = require('express-handlebars');
-const methodOverride = require('method-override');
-const app = express();
+const mongoose = require('mongoose');
+const path = require('path');
+const postController = require('./controllers/posts.js');
+const commentsController = require('./controllers/comments.js');
+const authController = require('./controllers/auth');
+
+// Port
 const port = process.env.PORT || 3000;
 
-// Database Connection
-require('./database-connection/mongoDB-connection');
-const Post = require('./models/post');
-// Template Engine setup
-app.engine('hbs', hbs({
-  extname: 'hbs',
-  defaultLayout: 'main',
-  layoutsDir: __dirname + '/views/layouts/'
-}));
-app.set('views', path.join(__dirname, 'views'));
+
+// MIDDLEWARE
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+
+// express-handlebars
+app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}));
 app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
-
-//Body Parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-// override with POST having ?_method=DELETE & ?_method=PUT
-app.use(methodOverride('X-HTTP-Method-Override'));
-app.use(methodOverride('_method'));
-app.use(methodOverride((req, res) => {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    let method = req.body._method;
-    delete req.body._method;
-    return method;
-  }
-}));
-app.use(cookieParser()); // Add this after you initialize express.
 
 
-// CRUD Resource >> INDEX
-app.get('/', (req, res) => {
-  Post.find().then((posts) => {
-    res.render('index.hbs', { posts })
-  }).catch((err) => {
-    console.log(err.message);
-  });
+// static content
+app.use(express.static('./public'));
+
+
+
+// ROUTES
+app.use('', postController);
+app.use('',  commentsController);
+app.use('', authController);
+
+
+
+// Database Connection
+require('./database-collection/mongoDB-connection')
+
+// Server
+app.listen(port, () => {
+	console.log(`Reddit Server listening on ${port}`);
 });
-
-const posts = require('./controllers/posts');
-const categories = require('./controllers/categories');
-const users = require('./controllers/auth');
-// Routes - Middleware
-app.use('/posts', posts);
-app.use('/c', categories);
-app.use('', users);
-
-
-module.exports = app.listen(port);

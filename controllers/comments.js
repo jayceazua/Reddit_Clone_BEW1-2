@@ -1,29 +1,25 @@
 const express = require('express');
-const Comment = require('../models/comment');
-const Post = require('../models/post');
-const router = require('express').Router();
+const router = express.Router();
+const Comment = require('../models/comments');
+const Post = require('../models/posts');
 
 
-// CREATE
-router.post('', (req, res) => {
-    // INSTANTIATE INSTANCE OF MODEL
-    const comment = new Comment(req.body)
-    // SAVE INSTANCE OF Comment MODEL TO DB
-    comment.save().then((comment) => {
-      return Post.findById(req.postsId)
-    })
-    .then((post) => {
-      post.comments.unshift(comment)
-      return post.save()
-    })
-    .then((post) => {
-      res.redirect(`/`)
-    }).catch((err) => {
-      console.log(err)
-    })
+// Make a new comment
+router.post('/posts/:postId/comments', (req, res) => {
+  // console.log('--- posts/:postId/comments ---');
+  const comment = new Comment(req.body);
+
+  comment.save().then( comment => {
+    return Post.findById(req.params.postId)
+  })
+    .then( post => {
+      post.comments.unshift(comment);
+      post.save();
+      // CANNOT USE /posts/:postId MUST USE req.params.postId!!!!!
+      return res.redirect(`/posts/${req.params.postId}`);
+  })
+    .catch( err => { console.log(err.message) })
 });
 
-// UPDATE
-// DELETE
 
 module.exports = router;

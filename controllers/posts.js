@@ -1,72 +1,44 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/post');
-const comments = require('./comments');
+const Post = require('../models/posts.js');
 
-// NEW
-router.get('/new', (req, res, next) => {
-  res.render('posts/new');
-  console.log(req.originalMethod);
+
+// Index route show all posts
+router.get('/', (req, res) => {
+	Post.find({}, (err, posts) => {
+		res.render('index', { posts: posts });
+	});
 });
 
-// READ a.k.a. SHOW
-router.get('/:id', (req, res, next) => {
-    // LOOK UP THE POST
-    Post.findById(req.params.id).populate('comments').then((post) => {
-      res.render('posts/show.hbs', { post })
-    }).catch((err) => {
-      console.log(err.message)
-    })
+// Renders the new post form
+router.get('/posts/new', (req, res)=> {
+	res.render('posts/new');
 });
 
-// CREATE
-router.post('', (req, res, next) => {
-  // INSTANTIATE INSTANCE OF POST MODEL
-  let post = new Post(req.body);
-  // SAVE INSTANCE OF POST MODEL TO DB
-  post.save().then(() => {
-    return res.redirect('/');
-  }).catch((err) => {
-    console.log(err.message);
-    return res.redirect('/');
-  });
+// Create post
+router.post('/posts/new', (req, res) => {
+
+	let post = new Post(req.body);
+  post.save((err, post) => {
+		return res.redirect('/');
+	})
 });
 
-// UPDATE - GET
-router.get('/:id/edit', (req, res, next) => {
-  Post.findById(req.params.id).then((post) => {
-    return res.render('posts/edit', { post });
-  }).catch((err) => {
-    console.log(err.message);
-    return res.redirect('/');
-  });
+// SHOW post by posts/:id
+router.get('/posts/:id', (req, res) => {
+	// LOOK UP THE POST
+	Post.findById(req.params.id).populate('comments')
+		.then( post => { res.render('posts/show', { post: post }) })
+		.catch((err) => { console.log(err.message) })
 });
 
-// UPDATE
-router.put('/:id', (req, res, next) => {
-  Post.findByIdAndUpdate(req.params.id, req.body).then(() => {
-    res.redirect('/');
-  }).catch((err) => {
-    res.send(err.message);
-  })
-});
-
-// DELETE
-router.delete('/:id', (req, res, next) => {
-  Post.findByIdAndRemove(req.params.id).then(() => {
-    return res.redirect('/');
-  }).catch((err) => {
-    console.log(err.message);
-    return res.redirect('/');
-  });
+// SUBREDDIT
+router.get('/s/:subreddit', (req, res) => {
+	console.log(req.params.subreddit)
+	Post.find({ subreddit: req.params.subreddit })
+		.then( posts => { res.render('index', { posts }) })
+		.catch( err => { console.log(err.message) })
 });
 
 
-// Comments
-
-router.use('/:id/comments', (req, res, next) => {
-  req.postsId = req.params.id;
-  next();
-}, comments);
-
-module.exports = router
+module.exports = router;
